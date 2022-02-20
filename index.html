@@ -1,12 +1,304 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>
       <%= htmlWebpackPlugin.options.title %>
     </title>
-    <link href="style.css" rel="stylesheet">
+    <style>
+      * {
+        user-select: none;
+        outline: none;
+      }
+      body {
+        background-color: white;
+      }
+      .container {
+        width: 1050px;
+        margin: 0 auto;
+      }
+      .menu {
+        display: flex;
+      }
+      .switch {
+        position: relative;
+        width: 60px;
+        height: 34px;
+      }
+      .switch input {
+        display: none;
+      }
+      .slider {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        cursor: pointer;
+        background-color: gray;
+        border-radius: 34px;
+        transition: 0.4s; 
+      }
+      .slider::before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.5s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: black;
+      }
+      input:checked + .slider::before {
+        transform: translateX(26px);
+      }
+      .select-box {
+        position: relative;
+        margin-left: 60px;
+        height: 34px;
+      }
+      .select-box select {
+        font-size: 0.9rem;
+        padding: 2px 5px;
+        height: 34px;
+        width: 200px;
+      }
+      .input-group {
+        margin: 100px 0px;
+      }
+      .input {
+        border: none;
+        border-bottom: 2px solid lightgrey;
+        width: 1050px;
+        height: 50px;
+        font-size: 30px;
+        text-align: center;
+        display: block;
+      }
+      .error-message {
+        color: #cc0033;
+        font-size: 30px;
+        line-height: 30px;
+        margin-top: 10px;
+        text-align: center;
+      }
+      .input-group .error-message {
+        display: none;  
+      }
+      .error input {
+        border-bottom: 2px solid red;
+      }
+      .error .error-message {
+        display: block;
+      }
+      .keyboard {
+        background-color: gray;
+        color: gray;
+        width: 1050px;
+        border-radius: 4px;
+      }
+      .row {
+        display: flex;
+      }
+      .key {
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+        border-radius: 4px;
+        background-color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        transition: 0.2s;
+      }
+      .key:hover {
+        background-color: lightgray;
+      }
+      .key.active {
+        background-color: #333;
+        color: #fff;
+      }
+      .key .two-value {
+        width: 100%;
+        text-align: center;
+      }
+      .fn-key {
+        width: 80px;
+      }
+      .space-key {
+        width: 420px;
+      }
+      .back-space-key {
+        width: 130px;
+      }
+      .tab-key {
+        width: 95px;
+      }
+      .back-slash-key {
+        width: 95px;
+      }
+      .caps-lock-key {
+        width: 110px;
+      }
+      .left-shift-key {
+        width: 145px;
+      }
+      .enter-key {
+        width: 150px;
+      }
+      .right-shift-key {
+        width: 185px;
+      }
+    </style>
   </head>
   <body>
-    <div>안녕</div>
+    <div class="container" id="container">
+      <div class="menu">
+        <label class="switch">
+          <input id="switch" type="checkbox">
+          <span class="slider"></span>
+        </label>
+        <div class="select-box">
+          <label for="font">Font:</label>
+          <select id="font">
+            <option value="" disabled selected>폰트 선택</option>
+            <option value="Comic Sans MS, Comic Sans, cursive">폰트 1</option>
+            <option value="Arial Narrow, sans-serif">폰트 2</option>
+            <option value="Chalkduster, fantasy">폰트 3</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-group" id="input-group">
+        <input id="input" class="input" type="text" autocomplete="off">
+        <div class="error-message">한글 입력 불가</div>
+      </div>
+      <div class="keyboard" id="keyboard">
+        <div class="row">
+          <div class="key" data-code="Backquote" data-val="`">
+            <span class="two-value">~</span>
+            <span class="two-value">`</span>
+          </div>
+          <div class="key" data-code="Digit1" data-val="1">
+            <span class="two-value">!</span>
+            <span class="two-value">1</span>
+          </div>
+          <div class="key" data-code="Digit2" data-val="2">
+            <span class="two-value">@</span>
+            <span class="two-value">2</span>
+          </div>
+          <div class="key" data-code="Digit3" data-val="3">
+            <span class="two-value">#</span>
+            <span class="two-value">3</span>
+          </div>
+          <div class="key" data-code="Digit4" data-val="4">
+            <span class="two-value">$</span>
+            <span class="two-value">4</span>
+          </div>
+          <div class="key" data-code="Digit5" data-val="5">
+            <span class="two-value">%</span>
+            <span class="two-value">5</span>
+          </div>
+          <div class="key" data-code="Digit6" data-val="6">
+            <span class="two-value">^</span>
+            <span class="two-value">6</span>
+          </div>
+          <div class="key" data-code="Digit7" data-val="7">
+            <span class="two-value">&</span>
+            <span class="two-value">7</span>
+          </div>
+          <div class="key" data-code="Digit8" data-val="8">
+            <span class="two-value">*</span>
+            <span class="two-value">8</span>
+          </div>
+          <div class="key" data-code="Digit9" data-val="9">
+            <span class="two-value">(</span>
+            <span class="two-value">9</span>
+          </div>
+          <div class="key" data-code="Digit0" data-val="0">
+            <span class="two-value">)</span>
+            <span class="two-value">0</span>
+          </div>
+          <div class="key" data-code="Minus" data-val="-">
+            <span class="two-value">_</span>
+            <span class="two-value">-</span>
+          </div>
+          <div class="key" data-code="Equal" data-val="=">
+              <span class="two-value">+</span>
+              <span class="two-value">=</span>
+          </div>
+          <div class="key back-space-key" data-code="Backspace" data-val="Backspace">
+              Backspace
+          </div>
+        </div>
+        <div class="row">
+          <div class="key tab-key">Tab</div>
+          <div class="key" data-code="KeyQ" data-val="q">Q</div>
+          <div class="key" data-code="KeyW" data-val="w">W</div>
+          <div class="key" data-code="KeyE" data-val="e">E</div>
+          <div class="key" data-code="KeyR" data-val="r">R</div>
+          <div class="key" data-code="KeyT" data-val="t">T</div>
+          <div class="key" data-code="KeyY" data-val="y">Y</div>
+          <div class="key" data-code="KeyU" data-val="u">U</div>
+          <div class="key" data-code="KeyI" data-val="i">I</div>
+          <div class="key" data-code="KeyO" data-val="o">O</div>
+          <div class="key" data-code="KeyP" data-val="p">P</div>
+          <div class="key" data-code="BracketLeft" data-val="[">
+              <span class="two-value">{</span>
+              <span class="two-value">[</span>
+          </div>
+          <div class="key" data-code="BracketRight" data-val="]">
+              <span class="two-value">}</span>
+              <span class="two-value">]</span>
+          </div>
+          <div class="key back-slash-key" data-code="Backslash" data-val="\">
+              <span class="two-value">|</span>
+              <span class="two-value">\</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="key left-shift-key" data-code="ShiftLeft">Shift</div>
+          <div class="key" data-code="KeyZ" data-val="z">Z</div>
+          <div class="key" data-code="KeyX" data-val="x">X</div>
+          <div class="key" data-code="KeyC" data-val="c">C</div>
+          <div class="key" data-code="KeyV" data-val="v">V</div>
+          <div class="key" data-code="KeyB" data-val="b">B</div>
+          <div class="key" data-code="KeyN" data-val="n">N</div>
+          <div class="key" data-code="KeyM" data-val="m">M</div>
+          <div class="key" data-code="Comma" data-val=",">
+              <span class="two-value">
+                  &lt;
+              </span>
+              <span class="two-value">,</span>
+          </div>
+          <div class="key" data-code="Period" data-val=".">
+              <span class="two-value">
+                  &gt;
+              </span>
+              <span class="two-value">.</span>
+          </div>
+          <div class="key" data-code="Slash" data-val="/">
+              <span class="two-value">?</span>
+              <span class="two-value">/</span>
+          </div>
+          <div class="key right-shift-key" data-code="ShiftRight">Shift</div>
+        </div>
+        <div class="row">
+          <div class="key fn-key">Ctrl</div>
+          <div class="key fn-key">-</div>
+          <div class="key fn-key">Alt</div>
+          <div class="key space-key" data-code="Space" data-val="Space">Space</div>
+          <div class="key fn-key">Alt</div>
+          <div class="key fn-key">Fn</div>
+          <div class="key fn-key">-</div>
+          <div class="key fn-key">Ctrl</div>
+        </div>
+      </div>
+    </div>
     <script defer src="bundle.js"></script>
   </body>
 </html>
