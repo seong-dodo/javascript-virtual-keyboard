@@ -1,1 +1,3 @@
-// console.log("안녕!!!");
+import { keyboard } from "../js/keyboard.js";
+
+new keyboard();
